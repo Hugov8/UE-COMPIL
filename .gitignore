@@ -1,0 +1,9 @@
+target/
+.bloop/
+.bsp/
+.idea/
+.vscode/
+.metals/
+*.zip
+*.jar
+project/
