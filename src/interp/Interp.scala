@@ -6,6 +6,8 @@ import Term._
 import ast.Op._
 import InterpException._
 
+import scala.language.implicitConversions
+
 object Interp :
   type Env = Map[String, Value | IceCube]
   implicit def unionToValue(x: Value | IceCube): Value = x match
@@ -28,7 +30,7 @@ object Interp :
       env(x) match
         case v :Value => v
         case i :IceCube => interp(i.term, env)
-    } else throw VariableNotDefined(s"\"${x}\" is not defined in this scope")
+    } else throw VariableNotDefined(s"\"$x\" is not defined in this scope")
 
     case IfZ(t1, t2, t3) =>
       val v1 = interp(t1, env)
