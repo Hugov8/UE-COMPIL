@@ -39,7 +39,7 @@ object Typer {
     case App(fun, arg) =>
       val typeArg = typer(arg, env)
       val typeF = typer(fun, env)
-      if !(typeF=== -->(TVar(), TVar())) then throw UnificationFailed(s"The caller is of type $typeF")
+      if !(typeF=== -->(TVar(), TVar())) then throw UnificationFailed(s"The caller is of type $typeF, not a function")
       val res = TVar()
       if typeF === typeArg-->res then res else throw UnificationFailed(s"The argument of the function have the wrong type ${typeF.deref.asInstanceOf[-->].a} expected, not $typeArg")
 
