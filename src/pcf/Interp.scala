@@ -6,7 +6,7 @@ import org.antlr.v4.runtime.{ANTLRInputStream, CommonTokenStream}
 import parser.{ASTVisitor, Error, ErrorListener, PCFParser, ReportingPCFLexer, SyntaxError}
 import interp.Value
 import interp.Interp.{interp, valueToInt}
-import typer.{Type}
+import typer.Type
 import typer.Typer.typer
 import parser.{transform, toPCF}
 
