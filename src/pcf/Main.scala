@@ -3,11 +3,12 @@ package pcf
 import ast.{ATerm, Term}
 import interp.{IceCube, Value}
 import org.antlr.v4.runtime.{ANTLRInputStream, CommonTokenStream}
-import parser.{ASTVisitor, Error, ErrorListener, PCFParser, ReportingPCFLexer, SyntaxError}
+import parser.{ASTVisitor, Error, ErrorListener, PCFParser, ReportingPCFLexer, SyntaxError, transform}
 import typer.Type
 
 import java.io.{FileInputStream, FileWriter, InputStream}
 import scala.collection.mutable.Map
+
 object Main :
   def main(args: Array[String]): Unit =
     val (is, filename) =
@@ -30,7 +31,7 @@ object Main :
       if (verbose) println(s"ANTLR Parse Tree: ${tree.toStringTree(parser)}")
       if ! Error.flag then
         val visitor = new ASTVisitor
-        val term = visitor.visit(tree).asInstanceOf[Term]
+        val term = transform(visitor.visit(tree).asInstanceOf[Term]).asInstanceOf[Term]
         if (verbose) println(s"AST: $term")
         val typ = typer.Typer.typer(term, Map())
         (term, typ)

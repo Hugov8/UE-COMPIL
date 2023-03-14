@@ -1,8 +1,10 @@
 package gen
 
-import ast.ATerm._
+import ast.ATerm.*
 import ast.ATerm
-import ast.Op._
+import ast.Op.*
+
+import scala.io.Source.fromFile
 
 enum Code {
   case Ins(s: String, space: Int=0)
@@ -32,11 +34,22 @@ object Gen {
     )
     case IfZ(t1, t2, t3) => Code.Seq(emit(t1, space) :: Code.Test(emit(t2, space+1), emit(t3, space+1), space) :: Nil)
     case App(f, arg) => Code.Seq(Code.Ins("(call (")::emit(f)::Code.Ins(") (",1):: emit(arg)::Code.Ins("))")::Nil)
+    case Let(_, t: ATerm, in: ATerm) => Code.Seq(emit(t) ::PushEnv :: Extend :: PopEnv :: emit(in) :: Nil)
+    case VAR(_, i) => Search(i)
     case _ => ???
   }
 
-  def gen(term: ATerm): String = "(module\n" +
-    "  (func (export \"main\") (result i32)\n" +
+  private def Search(idx: Int): Code = Code.Seq(Code.Ins(s"i32.const $idx"):: Code.Ins("global.get $ENV") :: Code.Ins("call $search") ::Nil)
+  private val PushEnv: Code = Code.Ins("global.get $ENV")
+  private val PopEnv: Code = Code.Ins("global.set $ENV")
+  private val Extend: Code = Code.Ins("call $cons")
+  private def initEnv: String =
+    val src = fromFile("src/gen/initEnv.wat")
+    val res = src.mkString
+    src.close
+    res
+  def gen(term: ATerm): String = "(module\n" + initEnv +
+    "\n;;Begin compiled code\n  (func (export \"main\") (result i32)\n" +
     s"${format(emit(term,3))}\n" +
     "   return)\n  )\n"
 }
