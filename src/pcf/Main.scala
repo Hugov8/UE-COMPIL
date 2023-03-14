@@ -1,7 +1,6 @@
 package pcf
 
-import ast.{Term}
-import annotate.ATerm
+import ast.{ATerm, Term}
 import interp.{IceCube, Value}
 import org.antlr.v4.runtime.{ANTLRInputStream, CommonTokenStream}
 import parser.{ASTVisitor, Error, ErrorListener, PCFParser, ReportingPCFLexer, SyntaxError}
@@ -9,7 +8,6 @@ import typer.Type
 
 import java.io.{FileInputStream, FileWriter, InputStream}
 import scala.collection.mutable.Map
-
 object Main :
   def main(args: Array[String]): Unit =
     val (is, filename) =
@@ -45,7 +43,7 @@ object Main :
 
     def compile(): Unit =
       val (term, _) = analyze()
-      val aterm = annotate.Annotate.annotate(term, Nil)
+      val aterm = term.annotate(Nil)
       if (verbose) println(s"annotated AST: $aterm")
       val code = gen.Gen.gen(aterm)
       if (filename.isDefined) write(code)
@@ -61,3 +59,4 @@ object Main :
       out.flush()
       out.close()
       CFilename
+
