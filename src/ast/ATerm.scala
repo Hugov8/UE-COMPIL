@@ -9,7 +9,7 @@ enum ATerm {
   // case LetPlus(letters: List[(String, ATerm)], expression: ATerm) //Should never happen
   case Let(x: String, t: ATerm, in: ATerm) // ok
 
-  case Fun(arg: String, body: ATerm)
+  case Fun(arg: String, body: ATerm) // ok
   case Fix(arg: String, body: ATerm)
-  case App(f: ATerm, arg: ATerm) //--> ok à tester quand fun sera implémenté
+  case App(f: ATerm, arg: ATerm) //--> ok
 }

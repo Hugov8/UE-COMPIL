@@ -1,0 +1,1 @@
+let id = fun x->x in let inc = fun x->x+1 in (id inc) 76

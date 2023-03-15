@@ -35,7 +35,7 @@ object Gen {
     , space) :: Nil
     )
     case IfZ(t1, t2, t3) => Code.Seq(emit(t1, space) :: Code.Test(emit(t2, space+1), emit(t3, space+1), space) :: Nil)
-    case Let(_, t: ATerm, in: ATerm) => Code.Seq(emit(t) ::PushEnv :: Extend :: PopEnv :: emit(in) :: Nil)
+    case Let(_, t: ATerm, in: ATerm) => Code.Seq(Code.Ins(";; begin let") ::PushEnv:: emit(t) :: Extend :: emit(in) :: PopEnv::Code.Ins(";;end let") :: Nil)
     case VAR(_, i) => Search(i)
 
     case Fun(_, body: ATerm) =>
@@ -46,16 +46,16 @@ object Gen {
 
       MkClos(currentIndex)
 
-    case App(fun, arg) => Code.Seq(emit(arg) :: emit(fun) ::Code.Ins("call $apply")::PopEnv :: Nil)
+    case App(fun, arg) => Code.Seq(Code.Ins(";;begin app"):: PushEnv ::emit(arg) :: emit(fun) ::Code.Ins("call $apply")::PopEnv::Code.Ins(";;end app") :: Nil)
     case _ => ???
   }
 
   private def Search(idx: Int): Code = Code.Seq(Code.Ins(s"i32.const $idx"):: Code.Ins("global.get $ENV") :: Code.Ins("call $search") ::Nil)
-  private val PushEnv: Code = Code.Ins("global.get $ENV")
-  private val PopEnv: Code = Code.Seq(Code.Ins("global.set $ACC")::Code.Ins("global.get $ACC") :: Code.Ins("global.set $ENV")::Code.Ins("global.get $ACC") ::Nil)
-  private val Extend: Code = Code.Ins("call $cons")
+  private val PushEnv: Code = Code.Ins("global.get $ENV;;pushenv")
+  private val PopEnv: Code = Code.Seq(Code.Ins(";;begin popenv")::Code.Ins("global.set $ACC") :: Code.Ins("global.set $ENV") :: Code.Ins("global.get $ACC")::Code.Ins(";;end popenv") ::Nil)
+  private val Extend: Code = Code.Seq(Code.Ins(";;begin extend"):: PushEnv:: Code.Ins("call $cons") :: Code.Ins("global.set $ENV"):: Code.Ins(";;end extend"):: Nil)
 
-  private def MkClos(idx: Int) = Code.Seq(Code.Ins(s"i32.const $idx")::PushEnv ::Code.Ins("call $pair") ::Nil)
+  private def MkClos(idx: Int) = Code.Seq(Code.Ins(";;begin mkclos") ::Code.Ins(s"i32.const $idx")::Code.Ins("global.get $ENV") ::Code.Ins("call $pair")::Code.Ins(";;end mkclos") ::Nil)
 
   private def initEnv: String =
     val src = fromFile("src/gen/initEnv.wat")

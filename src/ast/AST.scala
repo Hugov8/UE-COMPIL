@@ -30,6 +30,7 @@ enum Term extends AST :
       val v1 = t.annotate(e)
       ATerm.Let(x, v1, in.annotate(x :: e))
     case VAR(x) =>
+      //Si deux variable ont le même nom dans des environnements imbriquées ?
       val indice = findInEnv(x, e)
       if indice == e.size then throw Exception("Var does not exist") else ATerm.VAR(x, indice)
     case Fun(arg, body) => ATerm.Fun(arg, body.annotate(arg :: e))
