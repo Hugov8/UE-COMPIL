@@ -60,6 +60,13 @@ public class PCFBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements PC
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitFixFun(PCFParser.FixFunContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitLet(PCFParser.LetContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

@@ -13,6 +13,7 @@ term : LIT                                   # Lit
      | 'let' VAR '=' term 'in' term          # Let
      | 'fun' VAR '->' term                   # Fun
      | 'fix' VAR term                        # Fix
+     | 'fixfun' VAR VAR '->' term            # FixFun
      ;
 
 

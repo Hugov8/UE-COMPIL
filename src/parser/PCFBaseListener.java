@@ -89,6 +89,18 @@ public class PCFBaseListener implements PCFListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterFixFun(PCFParser.FixFunContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFixFun(PCFParser.FixFunContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterLet(PCFParser.LetContext ctx) { }
 	/**
 	 * {@inheritDoc}

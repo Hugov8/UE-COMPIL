@@ -80,6 +80,18 @@ public interface PCFListener extends ParseTreeListener {
 	 */
 	void exitVar(PCFParser.VarContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code FixFun}
+	 * labeled alternative in {@link PCFParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterFixFun(PCFParser.FixFunContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code FixFun}
+	 * labeled alternative in {@link PCFParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitFixFun(PCFParser.FixFunContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code Let}
 	 * labeled alternative in {@link PCFParser#term}.
 	 * @param ctx the parse tree

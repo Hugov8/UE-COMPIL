@@ -53,6 +53,13 @@ public interface PCFVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVar(PCFParser.VarContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code FixFun}
+	 * labeled alternative in {@link PCFParser#term}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFixFun(PCFParser.FixFunContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Let}
 	 * labeled alternative in {@link PCFParser#term}.
 	 * @param ctx the parse tree

@@ -47,6 +47,7 @@ object Gen {
       MkClos(currentIndex)
 
     case App(fun, arg) => Code.Seq(Code.Ins(";;begin app"):: PushEnv ::emit(arg) :: emit(fun) ::Code.Ins("call $apply")::PopEnv::Code.Ins(";;end app") :: Nil)
+    case Fix(_, body) => Code.Seq(Code.Ins(";; begin fix"):: PushEnv:: emit(body) :: Extend:: Code.Ins(";; end fix") ::Nil)
     case _ => ???
   }
 

@@ -18,6 +18,11 @@ class ASTVisitor[AST] extends PCFBaseVisitor[AST] :
     val t = visit(ctx.term).asInstanceOf[Term]
     Term.Fix(arg, t).asInstanceOf[AST]
 
+  override def visitFixFun(ctx: PCFParser.FixFunContext): AST =
+    val List(f, arg) = ctx.VAR.asScala.toList.map(_.getText)
+    val body = visit(ctx.term).asInstanceOf[Term]
+    Term.FixFun(f, arg, body).asInstanceOf[AST]
+
   override def visitApp(ctx: PCFParser.AppContext): AST =
     val ANTLRTerms = ctx.term.asScala.toList
     val List(term1, term2) =

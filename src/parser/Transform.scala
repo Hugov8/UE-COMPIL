@@ -1,7 +1,7 @@
 package parser
 
 import ast.*
-import ast.Term.{BOp, Fix, IfZ, Let, LetPlus, App, Fun}
+import ast.Term.{BOp, Fix, IfZ, Let, LetPlus, App, Fun, FixFun}
 
 def transform(ast: AST): AST = ast match
   case Fix(arg, body) => Fix(arg, transform(body).asInstanceOf[Term])
@@ -26,4 +26,5 @@ def transform(ast: AST): AST = ast match
     }
   case Fun(arg, body) => Fun(arg, transform(body).asInstanceOf[Term])
   case App(f, arg) => App(transform(f).asInstanceOf[Term], transform(arg).asInstanceOf[Term])
+  case FixFun(f, arg, body) => Fix(f, Fun(arg, transform(body).asInstanceOf[Term]))
   case _ => ast

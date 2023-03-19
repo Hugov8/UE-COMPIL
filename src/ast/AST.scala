@@ -14,6 +14,7 @@ enum Term extends AST :
   case Fun(arg: String, body: Term)
   case Fix(arg: String, body: Term)
   case App(f: Term, arg: Term)
+  case FixFun(f: String, arg: String, body: Term)
 
   type Env = List[String]
 
@@ -36,7 +37,7 @@ enum Term extends AST :
     case Fun(arg, body) => ATerm.Fun(arg, body.annotate(arg :: e))
     case App(fun, arg) => ATerm.App(fun.annotate(e), arg.annotate(e))
     case Fix(arg, body) => ATerm.Fix(arg, body.annotate(arg :: e))
-    case _ => throw Exception("Should not happen")
+    case _ => throw Exception("Should not happen") // LetPlus et FixFun déjà transformé
   }
 
 
