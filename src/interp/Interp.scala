@@ -1,7 +1,7 @@
 package interp
 
 import ast.Term
-import scala.collection.mutable.Map
+import scala.collection.immutable.Map
 import Term._
 import ast.Op._
 import InterpException._

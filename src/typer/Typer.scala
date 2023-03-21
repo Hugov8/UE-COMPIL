@@ -5,10 +5,10 @@ import ast.Term
 import typer.InterpException.*
 import Term.*
 
-import scala.collection.mutable
+import scala.collection.immutable
 
 object Typer {
-  type Env = mutable.Map[String, Type]
+  type Env = immutable.Map[String, Type]
   def typer(term: Term, env: Env): Type = term match
     case Lit(_) => INT
 

@@ -7,7 +7,7 @@ import parser.{ASTVisitor, Error, ErrorListener, PCFParser, ReportingPCFLexer, S
 import typer.Type
 
 import java.io.{FileInputStream, FileWriter, InputStream}
-import scala.collection.mutable.Map
+import scala.collection.immutable.Map
 
 object Main :
   def main(args: Array[String]): Unit =

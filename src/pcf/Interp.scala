@@ -10,7 +10,7 @@ import typer.Type
 import typer.Typer.typer
 import parser.{transform, toPCF}
 
-import scala.collection.mutable.Map
+import scala.collection.immutable.Map
 
 
 object Interp:
