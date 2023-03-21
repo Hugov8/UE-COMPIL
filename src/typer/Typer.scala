@@ -17,7 +17,7 @@ object Typer {
       typer(in, env + (x->typeT))
 
     case VAR(x) =>
-      if env.contains(x) then env(x) else throw UnificationFailed(s"Var ${x} not defined in this scope")
+      if env.contains(x) then env(x) else throw UnificationFailed(s"Var $x not defined in this scope")
 
     case IfZ(t1, t2, t3) =>
       val type1 = typer(t1, env)

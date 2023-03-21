@@ -12,8 +12,8 @@ enum Code {
   case Test(code1: Code, code2: Code, space: Int=0)
 }
 object Gen {
-  var indexClosure: Int = 0
-  var bodies: String = ""
+  private var indexClosure: Int = 0
+  private var bodies: String = ""
   private def format(code: Code): String =
 
     code match {
@@ -48,7 +48,7 @@ object Gen {
 
     case App(fun, arg) => Code.Seq(Code.Ins(";;begin app"):: PushEnv ::emit(arg) :: emit(fun) ::Code.Ins("call $apply")::PopEnv::Code.Ins(";;end app") :: Nil)
     case Fix(_, body) => Code.Seq(Code.Ins(";; begin fix"):: PushEnv:: emit(body) :: Extend:: Code.Ins(";; end fix") ::Nil)
-    case _ => ???
+    // case _ => ???
   }
 
   private def Search(idx: Int): Code = Code.Seq(Code.Ins(s"i32.const $idx"):: Code.Ins("global.get $ENV") :: Code.Ins("call $search") ::Nil)

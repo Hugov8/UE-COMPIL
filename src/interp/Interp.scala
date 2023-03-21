@@ -61,6 +61,6 @@ object Interp :
       interp(body, env + (arg->IceCube(body)))
 
     case LetPlus(_,_) => throw ShouldNotHappenException()
-
-    //case _ => throw NotYetImplemented()
+    case FixFun(_,_,_) => throw ShouldNotHappenException()
+    // case _ => throw NotYetImplemented()
 
