@@ -1,14 +1,12 @@
 package typer
 
-import scala.collection.mutable.Map
+import scala.collection.immutable.Map
 import ast.Term
 import typer.InterpException.*
 import Term.*
 
-import scala.collection.immutable
-
 object Typer {
-  type Env = immutable.Map[String, Type]
+  type Env = Map[String, Type]
   def typer(term: Term, env: Env): Type = term match
     case Lit(_) => INT
 
